@@ -126,10 +126,15 @@ class YMDHMSDatePickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate {
     
     //隐藏视图
     func hide(){
-        let datePickerView = self.getPCDatePickerView()
+        
+        var datePickerView = self.getPCDatePickerView()
         let vc : UIViewController! = self.currentVC();
-        UIView.animate(withDuration: 0.3) {
-            datePickerView?.frame = CGRect.init(x: 0, y: vc.view.frame.height, width: Screen_Width, height: self.frame.size.height)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            datePickerView?.frame = CGRect.init(x: 0, y: vc.view.frame.height, width: Screen_Width, height: self.frame.size.height);
+        }) { (finish) in
+            datePickerView?.removeFromSuperview()
+            datePickerView = nil
         }
     }
     

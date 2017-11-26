@@ -28,6 +28,8 @@ class ViewController: UIViewController {
             
         }
         
+        self.datePicker.backGroundColor = UIColor.white;
+        
         
         let btn = UIButton(type: .custom)
         self.view.addSubview(btn);
