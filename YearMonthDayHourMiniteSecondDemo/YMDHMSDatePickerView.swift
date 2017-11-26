@@ -202,25 +202,60 @@ class YMDHMSDatePickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate {
         
         if component == 0 {
             if !self.canChoicePastTime {
-                
+                self.judgeDate(row: row, InComponent: 0);
             }else{
                 self.selectedYear = row;
             }
             
+            let numOfDays = NSDate.getNumberOfDaysInMonth(month: self.selectedMonth, year: self.selectedYear);
+            
+            if self.selectedDay > numOfDays {
+                self.datePicker.selectRow(numOfDays-1+6200, inComponent: 2, animated: true);
+                self.selectedDay = numOfDays;
+            }
+            
         }else if(component == 1){
             
+            if self.canChoicePastTime != nil {
+                self.judgeDate(row: row, InComponent: 1)
+            }else{
+                self.selectedMonth = row%12+1;
+            }
+            
+            let numOfDays = NSDate.getNumberOfDaysInMonth(month: self.selectedMonth, year: self.selectedYear);
+            
+            if self.selectedDay > numOfDays{
+                self.datePicker.selectRow(numOfDays-1+6200, inComponent: 2, animated: true);
+                self.selectedDay = numOfDays;
+            }
             
         }else if(component == 2){
             
+            if self.canChoicePastTime != nil {
+                self.judgeDate(row: row, InComponent: 2);
+            }
             
+            let numOfDays = NSDate.getNumberOfDaysInMonth(month: self.selectedMonth, year: self.selectedYear)
+            if row%31 + 1 > numOfDays{
+                self.datePicker.selectRow(numOfDays-1+6200, inComponent: 2, animated: true)
+                self.selectedDay = numOfDays;
+            }else{
+                self.selectedDay = row%31+1;
+            }
         }else if(component == 3){
-            
-            
-        }else{
-            
-            
+            if self.canChoicePastTime != nil {
+                self.judgeDate(row: row, InComponent: 3);
+            }else{
+                self.selectedHour = row%24;
+            }
+        }else if(component == 4){
+            if(self.canChoicePastTime != nil){
+                self.judgeDate(row: row, InComponent: 4);
+            }else{
+                self.selectedMinute = row%60;
+            }
         }
-        
+        self.judgeTime();
     }
     
     
